@@ -54,9 +54,9 @@ const Navbar = () => {
         </div>
         <Link to="/" className="flex items-center gap-1">
           <img className="w-11 bg-cover" src={logo} alt="" />
-          <a className=" btn-ghost text-2xl font-bold">
+          <span className=" btn-ghost text-2xl font-bold">
             Fabri<span className="text-[#7bdcb5]">Quest</span>
-          </a>
+          </span>
         </Link>
       </div>
 
