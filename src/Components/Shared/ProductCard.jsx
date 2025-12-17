@@ -51,7 +51,7 @@ const ProductCard = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 px-15 bg-[#0b2b43]">
       {products.map((product, i) => (
         <div
           key={i}

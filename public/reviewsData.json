@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "Rahim Ahmed",
+    "rating": 5,
+    "review": "Excellent product quality! The fabric feels premium and delivery was very fast.",
+    "location": "Dhaka, Bangladesh",
+    "date": "2025-01-12"
+  },
+  {
+    "id": 2,
+    "name": "Nusrat Jahan",
+    "rating": 4,
+    "review": "Good design and comfortable to wear. Packaging could be improved.",
+    "location": "Chittagong, Bangladesh",
+    "date": "2025-01-15"
+  },
+  {
+    "id": 3,
+    "name": "Tanvir Hasan",
+    "rating": 5,
+    "review": "Loved the stitching quality. Totally worth the price!",
+    "location": "Sylhet, Bangladesh",
+    "date": "2025-01-18"
+  },
+  {
+    "id": 4,
+    "name": "Ayesha Akter",
+    "rating": 3,
+    "review": "Product is okay, but delivery took longer than expected.",
+    "location": "Rajshahi, Bangladesh",
+    "date": "2025-01-20"
+  },
+  {
+    "id": 5,
+    "name": "Imran Hossain",
+    "rating": 4,
+    "review": "Nice colors and fitting. Customer support was very helpful.",
+    "location": "Khulna, Bangladesh",
+    "date": "2025-01-22"
+  },
+  {
+    "id": 6,
+    "name": "Farzana Islam",
+    "rating": 5,
+    "review": "Amazing experience! Will definitely order again.",
+    "location": "Barisal, Bangladesh",
+    "date": "2025-01-25"
+  },
+  {
+    "id": 7,
+    "name": "Shakil Khan",
+    "rating": 4,
+    "review": "Quality exceeded my expectations. Smooth checkout process.",
+    "location": "Mymensingh, Bangladesh",
+    "date": "2025-01-28"
+  }
+]

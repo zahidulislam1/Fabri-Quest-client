@@ -23,7 +23,7 @@ const slides = [
   },
 ];
 
-export default function Banner() {
+const Banner = () => {
   const [index, setIndex] = useState(0);
 
   // Auto-slide every 5 seconds
@@ -88,4 +88,5 @@ export default function Banner() {
       </div>
     </div>
   );
-}
+};
+export default Banner;
