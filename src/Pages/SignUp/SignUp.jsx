@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-// import useAuth from "../../../hooks/useAuth";
+
 import { Link, useLocation, useNavigate } from "react-router";
-// import SocialLogin from "../SocialLogin/SocialLogin";
-// import axios from "axios";
+
+import axios from "axios";
 // import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import "animate.css";
+import useAuth from "../../Hooks/useAuth";
+import SocialLogin from "../../Components/Shared/SocialLogin";
+import { IoEyeOff } from "react-icons/io5";
+import { FaEye } from "react-icons/fa";
 
 const SignUp = () => {
+  const [show, setShow] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  // const { registerUser, updateUserProfile } = useAuth();
+  const { createUser, updateUserProfile } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   // const axiosSecure = useAxiosSecure();
@@ -22,35 +27,35 @@ const SignUp = () => {
   const handleRegistration = (data) => {
     const profileImg = data.photo[0];
 
-    // registerUser(data.email, data.password)
-    //   .then(() => {
-    //     const formData = new FormData();
-    //     formData.append("image", profileImg);
+    createUser(data.email, data.password)
+      .then(() => {
+        const formData = new FormData();
+        formData.append("image", profileImg);
 
-    //     const image_API_URL = `https://api.imgbb.com/1/upload?key=${
-    //       import.meta.env.VITE_image_host_key
-    //     }`;
+        const image_API_URL = `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_image_host_key
+        }`;
 
-    //     axios.post(image_API_URL, formData).then((res) => {
-    //       const photoURL = res.data.data.url;
+        axios.post(image_API_URL, formData).then((res) => {
+          const photoURL = res.data.data.url;
 
-    //       const userInfo = {
-    //         email: data.email,
-    //         displayName: data.name,
-    //         photoURL,
-    //       };
+          const userInfo = {
+            email: data.email,
+            displayName: data.name,
+            photoURL,
+          };
+          console.log(userInfo);
+          // axiosSecure.post("/users", userInfo);
 
-    //       axiosSecure.post("/users", userInfo);
-
-    //       updateUserProfile({
-    //         displayName: data.name,
-    //         photoURL,
-    //       }).then(() => {
-    //         navigate(location.state || "/");
-    //       });
-    //     });
-    //   })
-    //   .catch((error) => console.log(error));
+          updateUserProfile({
+            displayName: data.name,
+            photoURL,
+          }).then(() => {
+            navigate(location.state || "/");
+          });
+        });
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -58,12 +63,14 @@ const SignUp = () => {
       <div className="grid md:grid-cols-2 max-w-5xl w-full bg-base-100 rounded-2xl shadow-2xl overflow-hidden">
         {/* LEFT — REGISTER FORM */}
         <div className="p-8 animate__animated animate__fadeInLeft">
-          <h3 className="text-3xl font-bold text-center mb-2">Registration</h3>
+          <h3 className="text-3xl font-bold text-[#0b2b43] text-center mb-2">
+            Registration
+          </h3>
           <p className="text-center text-gray-500 mb-6">Create your account</p>
 
           <form onSubmit={handleSubmit(handleRegistration)}>
             {/* Name */}
-            <label className="label">Factory / Owner Name</label>
+            <label className="label">Your Name</label>
             <input
               type="text"
               {...register("name", { required: true })}
@@ -75,7 +82,7 @@ const SignUp = () => {
             )}
 
             {/* Photo */}
-            <label className="label">Profile Photo</label>
+            <label className="label">Your Photo</label>
             <input
               type="file"
               {...register("photo", { required: true })}
@@ -86,7 +93,7 @@ const SignUp = () => {
             )}
 
             {/* Email */}
-            <label className="label">Business Email</label>
+            <label className="label"> Email</label>
             <input
               type="email"
               {...register("email", { required: true })}
@@ -98,32 +105,41 @@ const SignUp = () => {
             )}
 
             {/* Password */}
-            <label className="label">Password</label>
-            <input
-              type="password"
-              {...register("password", {
-                required: true,
-                minLength: 6,
-                pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/,
-              })}
-              className="input input-bordered w-full mb-2"
-              placeholder="Strong password"
-            />
-            {errors.password?.type === "required" && (
-              <p className="text-red-500 text-sm">Password is required</p>
-            )}
-            {errors.password?.type === "minLength" && (
-              <p className="text-red-500 text-sm">
-                Minimum 6 characters required
-              </p>
-            )}
-            {errors.password?.type === "pattern" && (
-              <p className="text-red-500 text-sm">
-                Must include uppercase, lowercase, number & special character
-              </p>
-            )}
+            <div className="relative">
+              <label className="label">Password</label>
+              <input
+                type={show ? "text" : "password"}
+                {...register("password", {
+                  required: true,
+                  minLength: 6,
+                  pattern:
+                    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/,
+                })}
+                className="input input-bordered w-full mb-2"
+                placeholder="password"
+              />
+              <span
+                onClick={() => setShow(!show)}
+                className="absolute right-[7px] top-[35px] cursor-pointer z-50"
+              >
+                {show ? <FaEye /> : <IoEyeOff />}
+              </span>
+              {errors.password?.type === "required" && (
+                <p className="text-red-500 text-sm">Password is required</p>
+              )}
+              {errors.password?.type === "minLength" && (
+                <p className="text-red-500 text-sm">
+                  Minimum 6 characters required
+                </p>
+              )}
+              {errors.password?.type === "pattern" && (
+                <p className="text-red-500 text-sm">
+                  Must include uppercase, lowercase, number & special character
+                </p>
+              )}
+            </div>
 
-            <button className="btn bg-[#7bdcb5] hover:bg-[#6ac9a4] text-black w-full rounded-full shadow-lg border-none transition-transform duration-300 hover:scale-110 active:scale-95 mt-4">
+            <button className="btn bg-[#7bdcb5] hover:bg-[#6ac9a4] text-[#0b2b43] w-full rounded-full shadow-lg border-none transition-transform duration-300 hover:scale-110 active:scale-95 mt-4">
               SignUp
             </button>
           </form>
@@ -133,13 +149,15 @@ const SignUp = () => {
             <Link
               to="/login"
               state={location.state}
-              className="text-blue-500 underline"
+              className="text-[#7bdcb5] underline"
             >
               Login
             </Link>
           </p>
 
-          <div className="mt-4">{/* <SocialLogin /> */}</div>
+          <div className="mt-4">
+            <SocialLogin />
+          </div>
         </div>
 
         {/* RIGHT — GARMENTS IMAGE */}

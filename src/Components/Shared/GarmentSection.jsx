@@ -2,7 +2,7 @@ import "animate.css";
 
 const GarmentSection = () => {
   return (
-    <section className="max-w-7xl mx-auto my-20 px-15">
+    <section className="max-w-7xl mx-auto md:my-20 md:px-15">
       <div className="grid md:grid-cols-2 gap-10 rounded-3xl overflow-hidden shadow-lg">
         {/* LEFT IMAGE */}
         <div className="animate__animated animate__fadeInLeft animate__slow">

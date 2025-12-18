@@ -6,7 +6,7 @@ import ReviewCard from "../Shared/ReviewCard";
 const Reviews = ({ reviewsPromise }) => {
   const reviews = use(reviewsPromise);
   return (
-    <div className="px-15">
+    <div className="md:px-15">
       <div className=" text-center my-5">
         <h1 className="text-4xl font-bold text-[#0b2b43]">
           Loved by Our Customers

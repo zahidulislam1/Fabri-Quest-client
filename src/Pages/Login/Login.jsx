@@ -1,24 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Link, useLocation, useNavigate } from "react-router";
-// import SocialLogin from "../SocialLogin/SocialLogin";
+
 import "animate.css";
 import useAuth from "../../Hooks/useAuth";
+import SocialLogin from "../../Components/Shared/SocialLogin";
+import { IoEyeOff } from "react-icons/io5";
+import { FaEye } from "react-icons/fa";
 
 const Login = () => {
+  const [show, setShow] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-    const { logIn } = useAuth();
+  const { logInUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
   const handleLogin = (data) => {
-    logIn(data.email, data.password)
+    logInUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
         navigate(location?.state || "/");
@@ -33,7 +37,9 @@ const Login = () => {
       <div className="grid md:grid-cols-2 max-w-4xl w-full bg-base-100 rounded-2xl shadow-2xl overflow-hidden">
         {/* LEFT SIDE */}
         <div className="p-8 animate__animated animate__fadeInLeft">
-          <h3 className="text-3xl font-bold text-center mb-2">Please Login</h3>
+          <h3 className="text-3xl font-bold text-center text-[#0b2b43] mb-2">
+            Please Login
+          </h3>
           <p className="text-center text-gray-500 mb-6">
             Access your production dashboard
           </p>
@@ -52,40 +58,50 @@ const Login = () => {
             )}
 
             {/* Password */}
-            <label className="label">Password</label>
-            <input
-              type="password"
-              {...register("password", { required: true, minLength: 6 })}
-              className="input input-bordered w-full mb-2"
-              placeholder="Enter secure password"
-            />
-            {errors.password?.type === "minLength" && (
-              <p className="text-red-500 text-sm mb-2">
-                Password must be at least 6 characters
-              </p>
-            )}
+            <div className="relative">
+              <label className="label">Password</label>
+              <input
+                type={show ? "text" : "password"}
+                {...register("password", { required: true, minLength: 6 })}
+                className="input input-bordered w-full mb-2"
+                placeholder="password"
+              />
+              <span
+                onClick={() => setShow(!show)}
+                className="absolute right-[7px] top-[35px] cursor-pointer z-50"
+              >
+                {show ? <FaEye /> : <IoEyeOff />}
+              </span>
+              {errors.password?.type === "minLength" && (
+                <p className="text-red-500 text-sm mb-2">
+                  Password must be at least 6 characters
+                </p>
+              )}
+            </div>
 
             <div className="text-right mb-4">
               <a className="link link-hover text-sm">Forgot password?</a>
             </div>
 
-            <button className="btn bg-[#7bdcb5] hover:bg-[#6ac9a4] text-black w-full rounded-full shadow-lg border-none transition-transform duration-300 hover:scale-110 active:scale-95">
+            <button className="btn bg-[#7bdcb5] hover:bg-[#6ac9a4] text-[#0b2b43] w-full rounded-full shadow-lg border-none transition-transform duration-300 hover:scale-110 active:scale-95">
               Login
             </button>
           </form>
 
           <p className="text-sm text-center mt-4">
-            Create a New Account{" "}
+            Create A New Account{" "}
             <Link
               to="/signup"
               state={location.state}
-              className="text-blue-500 underline"
+              className="text-[#7bdcb5] underline"
             >
               SignUp
             </Link>
           </p>
 
-          <div className="mt-4">{/* <SocialLogin /> */}</div>
+          <div className="mt-4">
+            <SocialLogin />
+          </div>
         </div>
 
         {/* RIGHT SIDE */}

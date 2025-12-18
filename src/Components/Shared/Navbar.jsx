@@ -3,8 +3,13 @@ import logo from "/logo.png";
 import { FaHome } from "react-icons/fa";
 import { IoLogInOutline } from "react-icons/io5";
 import { motion } from "framer-motion";
+import useAuth from "../../Hooks/useAuth";
+
+import avatarImg from "../../assets/placeholder.jpg";
 
 const Navbar = () => {
+  const { user, logOut } = useAuth();
+
   return (
     <div className="navbar shadow-sm md:px-12 bg-[#0b2b43] text-white">
       <div className="navbar-start">
@@ -76,6 +81,11 @@ const Navbar = () => {
               All Product
             </Link>
           </li>
+          {user && (
+            <Link to="/dashboard" className="hover:text-[#7bdcb5]">
+              Dashboard
+            </Link>
+          )}
           <li>
             <Link to="/about" className="hover:text-[#7bdcb5]">
               About us
@@ -87,13 +97,42 @@ const Navbar = () => {
             </Link>
           </li>
         </ul>
-        <Link
-          to="/login"
-          className="btn bg-[#7bdcb5] hover:bg-[#6ac9a4] text-black  px-6 py-3 rounded-full shadow-lg border-none transition-transform duration-300 hover:scale-110 active:scale-95"
-        >
-          <IoLogInOutline />
-          Login
-        </Link>
+        {/* Dropdown Menu */}
+        <div className="relative">
+          <div className="flex flex-row items-center gap-3">
+            <div className="hidden md:block">
+              {/* Avatar */}
+              <img
+                className="rounded-full"
+                referrerPolicy="no-referrer"
+                src={user && user.photoURL ? user.photoURL : avatarImg}
+                alt="profile"
+                height="30"
+                width="30"
+              />
+            </div>
+          </div>
+        </div>
+        {user ? (
+          <>
+            <div
+              onClick={logOut}
+              className="btn bg-[#7bdcb5] hover:bg-[#6ac9a4] text-black  px-6 py-3 rounded-full shadow-lg border-none transition-transform duration-300 hover:scale-110 active:scale-95"
+            >
+              Logout
+            </div>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/login"
+              className="btn bg-[#7bdcb5] hover:bg-[#6ac9a4] text-[#0b2b43]  px-6 py-3 rounded-full shadow-lg border-none transition-transform duration-300 hover:scale-110 active:scale-95"
+            >
+              <IoLogInOutline />
+              Login
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );
