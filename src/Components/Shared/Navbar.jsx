@@ -6,9 +6,11 @@ import { motion } from "framer-motion";
 import useAuth from "../../Hooks/useAuth";
 
 import avatarImg from "../../assets/placeholder.jpg";
+import { useState } from "react";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+  const [active, setActive] = useState("home");
 
   return (
     <div className="navbar shadow-sm md:px-12 bg-[#0b2b43] text-white">
@@ -45,6 +47,13 @@ const Navbar = () => {
                 All Product
               </Link>
             </li>
+            {user && (
+              <li>
+                <Link to="/dashboard" className="hover:text-[#7bdcb5] ">
+                  Dashboard
+                </Link>
+              </li>
+            )}
             <li>
               <Link to="/about" className="hover:text-[#7bdcb5]">
                 About us
@@ -70,29 +79,62 @@ const Navbar = () => {
           <li>
             <Link
               to="/"
-              className="hover:text-[#7bdcb5] flex items-center gap-0.5"
+              onClick={() => setActive("home")}
+              className={`flex items-center gap-0.5 ${
+                active === "home" ? "text-[#7bdcb5]" : "hover:text-[#7bdcb5]"
+              }`}
             >
               <FaHome />
               Home
             </Link>
           </li>
           <li>
-            <Link to="/all-product" className="hover:text-[#7bdcb5]">
+            <Link
+              to="/all-product"
+              onClick={() => setActive("all-product")}
+              className={` ${
+                active === "all-product"
+                  ? "text-[#7bdcb5]"
+                  : "hover:text-[#7bdcb5]"
+              }`}
+            >
               All Product
             </Link>
           </li>
           {user && (
-            <Link to="/dashboard" className="hover:text-[#7bdcb5]">
-              Dashboard
-            </Link>
+            <li>
+              <Link
+                to="/dashboard"
+                onClick={() => setActive("dashboard")}
+                className={` ${
+                  active === "dashboard"
+                    ? "text-[#7bdcb5]"
+                    : "hover:text-[#7bdcb5]"
+                }`}
+              >
+                Dashboard
+              </Link>
+            </li>
           )}
           <li>
-            <Link to="/about" className="hover:text-[#7bdcb5]">
+            <Link
+              to="/about"
+              onClick={() => setActive("about")}
+              className={` ${
+                active === "about" ? "text-[#7bdcb5]" : "hover:text-[#7bdcb5]"
+              }`}
+            >
               About us
             </Link>
           </li>
           <li>
-            <Link to="/contact" className="hover:text-[#7bdcb5]">
+            <Link
+              to="/contact"
+              onClick={() => setActive("contact")}
+              className={` ${
+                active === "contact" ? "text-[#7bdcb5]" : "hover:text-[#7bdcb5]"
+              }`}
+            >
               Contact
             </Link>
           </li>
