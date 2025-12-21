@@ -20,12 +20,14 @@ import AllOrders from "../Pages/Dashboard/Admin/AllOrders";
 import AllProduct from "../Pages/AllProduct/AllProduct";
 import About from "../Pages/About";
 import Contact from "../Pages/Contact";
+import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     errorElement: <ErrorPage />,
+    hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>,
     children: [
       {
         path: "/",

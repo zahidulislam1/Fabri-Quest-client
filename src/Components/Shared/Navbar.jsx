@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import logo from "/logo.png";
 import { FaHome } from "react-icons/fa";
-import { IoLogInOutline } from "react-icons/io5";
+import { IoLogInOutline, IoLogOutOutline } from "react-icons/io5";
 import { motion } from "framer-motion";
 import useAuth from "../../Hooks/useAuth";
 
@@ -38,29 +38,65 @@ const Navbar = () => {
             className="menu bg-[#0b2b43] menu-sm dropdown-content  rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             <li>
-              <Link to="/" className="hover:text-[#7bdcb5]">
+              <Link
+                to="/"
+                onClick={() => setActive("home")}
+                className={`flex items-center gap-0.5 ${
+                  active === "home" ? "text-[#7bdcb5]" : "hover:text-[#7bdcb5]"
+                }`}
+              >
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/all-product" className="hover:text-[#7bdcb5]">
+              <Link
+                to="/all-product"
+                onClick={() => setActive("all-product")}
+                className={` ${
+                  active === "all-product"
+                    ? "text-[#7bdcb5]"
+                    : "hover:text-[#7bdcb5]"
+                }`}
+              >
                 All Product
               </Link>
             </li>
             {user && (
               <li>
-                <Link to="/dashboard" className="hover:text-[#7bdcb5] ">
+                <Link
+                  to="/dashboard"
+                  onClick={() => setActive("dashboard")}
+                  className={` ${
+                    active === "dashboard"
+                      ? "text-[#7bdcb5]"
+                      : "hover:text-[#7bdcb5]"
+                  }`}
+                >
                   Dashboard
                 </Link>
               </li>
             )}
             <li>
-              <Link to="/about" className="hover:text-[#7bdcb5]">
+              <Link
+                to="/about"
+                onClick={() => setActive("about")}
+                className={` ${
+                  active === "about" ? "text-[#7bdcb5]" : "hover:text-[#7bdcb5]"
+                }`}
+              >
                 About us
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="hover:text-[#7bdcb5]">
+              <Link
+                to="/contact"
+                onClick={() => setActive("contact")}
+                className={` ${
+                  active === "contact"
+                    ? "text-[#7bdcb5]"
+                    : "hover:text-[#7bdcb5]"
+                }`}
+              >
                 Contact
               </Link>
             </li>
@@ -159,8 +195,9 @@ const Navbar = () => {
           <>
             <div
               onClick={logOut}
-              className="btn bg-[#7bdcb5] hover:bg-[#6ac9a4] text-black  px-6 py-3 rounded-full shadow-lg border-none transition-transform duration-300 hover:scale-110 active:scale-95"
+              className="btn bg-[#7bdcb5] hover:bg-[#6ac9a4] text-black   rounded-full shadow-lg border-none transition-transform duration-300 hover:scale-110 active:scale-95"
             >
+              <IoLogOutOutline />
               Logout
             </div>
           </>
@@ -168,7 +205,7 @@ const Navbar = () => {
           <>
             <Link
               to="/login"
-              className="btn bg-[#7bdcb5] hover:bg-[#6ac9a4] text-[#0b2b43]  px-6 py-3 rounded-full shadow-lg border-none transition-transform duration-300 hover:scale-110 active:scale-95"
+              className="btn bg-[#7bdcb5] hover:bg-[#6ac9a4] text-[#0b2b43]   rounded-full shadow-lg border-none transition-transform duration-300 hover:scale-110 active:scale-95"
             >
               <IoLogInOutline />
               Login

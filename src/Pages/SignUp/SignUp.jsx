@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-
 import { Link, useLocation, useNavigate } from "react-router";
 
-import axios from "axios";
-// import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import "animate.css";
 import useAuth from "../../Hooks/useAuth";
 import SocialLogin from "../../Components/Shared/SocialLogin";
 import { IoEyeOff } from "react-icons/io5";
 import { FaEye } from "react-icons/fa";
+import { imageUpload } from "../../Utils";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const SignUp = () => {
   const [show, setShow] = useState(false);
@@ -22,40 +22,44 @@ const SignUp = () => {
   const { createUser, updateUserProfile } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  // const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
 
-  const handleRegistration = (data) => {
-    const profileImg = data.photo[0];
+  const handleRegistration = async (data) => {
+    try {
+      const profileImg = data.photo[0];
+      const photoURL = await imageUpload(profileImg);
 
-    createUser(data.email, data.password)
-      .then(() => {
-        const formData = new FormData();
-        formData.append("image", profileImg);
+      
+      await createUser(data.email, data.password);
 
-        const image_API_URL = `https://api.imgbb.com/1/upload?key=${
-          import.meta.env.VITE_image_host_key
-        }`;
+     
+      await updateUserProfile({
+        displayName: data.name,
+        photoURL: photoURL,
+      });
 
-        axios.post(image_API_URL, formData).then((res) => {
-          const photoURL = res.data.data.url;
+      
+      const userInfo = {
+        email: data.email,
+        name: data.name,
+        photoURL,
+      };
+      await axiosSecure.post("/users", userInfo);
 
-          const userInfo = {
-            email: data.email,
-            displayName: data.name,
-            photoURL,
-          };
-          console.log(userInfo);
-          // axiosSecure.post("/users", userInfo);
+      
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Signup Successful",
+        showConfirmButton: false,
+        timer: 1500,
+      });
 
-          updateUserProfile({
-            displayName: data.name,
-            photoURL,
-          }).then(() => {
-            navigate(location.state || "/");
-          });
-        });
-      })
-      .catch((error) => console.log(error));
+      navigate(location.state || "/");
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error", error.message, "error");
+    }
   };
 
   return (

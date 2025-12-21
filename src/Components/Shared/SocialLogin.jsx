@@ -2,11 +2,12 @@ import React from "react";
 
 import { useLocation, useNavigate } from "react-router";
 import useAuth from "../../Hooks/useAuth";
-// import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const SocialLogin = () => {
   const { signInWithGoogle } = useAuth();
-  //   const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -22,10 +23,18 @@ const SocialLogin = () => {
           photoURL: result.user.photoURL,
         };
 
-        // axiosSecure.post("/users", userInfo).then((res) => {
-        //   console.log("user data has been stored", res.data);
-        //   navigate(location.state || "/");
-        // });
+        axiosSecure.post("/users", userInfo).then((res) => {
+          console.log("user data has been stored", res.data);
+
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Signup Successful",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate(location.state || "/");
+        });
       })
       .catch((error) => {
         console.log(error);
