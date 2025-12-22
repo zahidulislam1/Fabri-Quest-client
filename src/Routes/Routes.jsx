@@ -21,6 +21,7 @@ import AllProduct from "../Pages/AllProduct/AllProduct";
 import About from "../Pages/About";
 import Contact from "../Pages/Contact";
 import LoadingSpinner from "../Components/Shared/LoadingSpinner";
+import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,14 @@ export const router = createBrowserRouter([
       },
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <SignUp /> },
+      {
+        path: "/product-details/:id",
+        element: (
+          <PrivateRoute>
+            <ProductDetails></ProductDetails>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {

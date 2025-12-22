@@ -4,13 +4,14 @@ import Brands from "./Brands";
 import Reviews from "./Reviews";
 import GarmentSection from "../Shared/GarmentSection";
 import SubscriptionSection from "../Shared/SubscriptionSection";
+import LatestProduct from "../Shared/LatestProduct";
 
 const reviewsPromise = fetch("/reviewsData.json").then((res) => res.json());
 const Home = () => {
   return (
     <div>
       <Banner></Banner>
-      <ProductCard></ProductCard>
+      <LatestProduct></LatestProduct>
       <div className="my-4 md:my-7">
         <Brands></Brands>
       </div>

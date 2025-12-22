@@ -1,25 +1,28 @@
+import React from "react";
+import ProductCard from "./ProductCard";
 import { useQuery } from "@tanstack/react-query";
-import ProductCard from "../../Components/Shared/ProductCard";
 import axios from "axios";
-import LoadingSpinner from "../../Components/Shared/LoadingSpinner";
+import LoadingSpinner from "./LoadingSpinner";
 
-const AllProducts = () => {
+const LatestProduct = () => {
   const { data: products = [], isLoading } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["latest-products"],
     queryFn: async () => {
-      const result = await axios(`${import.meta.env.VITE_API_URL}/products`);
+      const result = await axios(
+        `${import.meta.env.VITE_API_URL}/latest-products`
+      );
       return result.data;
     },
   });
 
   if (isLoading) return <LoadingSpinner />;
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-15 py-10">
+    <div className="max-w-7xl mx-auto bg-[#0b2b43] px-4 md:px-15 py-10">
       {/* Title */}
       <div className="text-center mb-10">
-        <h1 className="text-4xl font-bold text-[#0b2b43]">All Products</h1>
-        <p className="text-gray-500 mt-2">
-          Explore our latest garment products
+        <h1 className="text-4xl font-bold text-white">New Arrivals</h1>
+        <p className=" mt-2 text-white">
+          Fresh styles and trending garments just for you
         </p>
       </div>
 
@@ -38,4 +41,4 @@ const AllProducts = () => {
   );
 };
 
-export default AllProducts;
+export default LatestProduct;

@@ -42,7 +42,7 @@ const AddProduct = () => {
       console.log(payload);
     },
     onSettled: (data, error) => {
-      console.log(data)
+      console.log(data);
       if (error) console.log(error);
     },
     retry: 3,
@@ -80,7 +80,8 @@ const AddProduct = () => {
         category,
         payment,
         videoLink,
-        managerDetail: {
+        
+        managerDetails: {
           image: user?.photoURL,
           name: user?.displayName,
           email: user?.email,
